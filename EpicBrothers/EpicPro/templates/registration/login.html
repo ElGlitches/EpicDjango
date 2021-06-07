@@ -1,0 +1,42 @@
+
+{% extends "EpicPro/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Ingresa</h2>
+                        <hr>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form | crispy }}
+                            <a href="{% url 'Home' %}">Regresar al inicio</a> |
+                            <a href="{% url 'registro' %}">Registrate</a>
+
+                            <input type="submit" value="ingresar" class="btn btn-success float-right" >
+                        </form>
+                        <a href="{% url 'social:begin' 'facebook' %}">Continuar con facebook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+    </div>
+
+
+
+{% endblock %}
+
+

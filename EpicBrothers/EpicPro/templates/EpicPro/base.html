@@ -1,0 +1,181 @@
+
+    {% load static %}
+
+    {% load pwa %}
+
+    {% progressive_web_app_meta %}
+
+
+    <!-- Bootstrap -->
+    <link href="{% static 'EpicPro/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+     <!-- Fonts -->
+    
+     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet"> 
+     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+     
+
+    <!-- Styles -->
+    <link href="{% static 'EpicPro/css/gestion.css' %}" rel="stylesheet">
+
+
+
+ 
+</head>
+
+<body>
+
+    <h1 class="site-heading text-center text-white d-none d-lg-block">
+      
+        <span class="site-heading-lower">Epic Brothers</span>
+      </h1>
+
+
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="{% url 'Home' %}">Todos tus juegos</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item {% if request.path == '/' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Home' %}">Inicio</a>
+          </li>
+          <li class="nav-item {% if request.path == '/servicios' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Servicios' %}">Mods</a>
+          </li>
+          <li class="nav-item {% if request.path == '/tienda' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Tienda' %}">Guias</a>
+          </li>
+          <li class="nav-item {% if request.path == '/contacto' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Contacto' %}">Contacto</a>
+          </li>
+          <li class="nav-item {% if request.path == '/blog' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Blog' %}">Blog</a>
+          </li>
+
+          <li class="nav-item {% if request.path == '/juegos' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'Juegos' %}">Juegos</a>
+          </li>
+
+           {% if perms.app.view_juegos %}
+
+          <li class="nav-item {% if request.path == '/juegos' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'listar' %}">  Listado Juegos  </a>
+          </li>
+
+          {% endif %}
+          {% if perms.app.add_juegos %}
+
+          <li class="nav-item {% if request.path == '/juegos' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'agregar' %}">  Agregar Juegos  </a>
+          </li>
+
+          {% endif %}
+
+          {% if user.is_authenticated %}
+
+          <li class="nav-item {% if request.path == '/juegos' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'logout' %}">Cerrar Sesion</a>
+          </li>
+
+          <li class="nav-item {% if request.path == '/juegos' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="#">@{{ user.username }}</a>
+          </li>
+          <li>
+            {% for auth in backends.associated %}
+
+                {% if auth.provider == 'facebook' %}
+                    <img src="{{ auth.extra_data.picture.data.url }}" alt="" width="50" height="50">
+                {% endif %}
+            {% endfor %}
+    
+          </li>
+
+
+          {% else %}
+
+          <li class="nav-item {% if request.path == '/juegos' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'login' %}">  Iniciar Sesion  </a>
+          </li>
+
+          <li class="nav-item {% if request.path == '/juegos' %}active{% endif %} px-lg-4">
+            <a class="nav-link text-uppercase text-expanded" href="{% url 'registro' %}">  Registrarse  </a>
+          </li>
+
+
+          {% endif %}
+
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+   
+    <!--contenido -->
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer text-faded text-center py-5">
+      <div class="container">
+        <p class="m-0">
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	        <a href="#" class="link">
+	          <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-stack-2x"></i>
+	            <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+	          </span>
+	        </a>
+	    </p>
+        <p class="m-0 mbt">
+        	<a href="#" class="link">Política de privacidad</a> ·
+        	<a href="#" class="link">Aviso legal</a> ·
+        	<a href="#" class="link">Cookies</a>
+		</p>
+        <p class="m-0 mbt1">&copy; Epic Brothers 2020</p>
+      </div>
+	</footer>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'EpicPro/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'EpicPro/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
+    {% if messages %}
+      {% for m in messages %}
+        <script>
+          Swal.fire({
+            title: "Felicitaciones",
+            text: "{{m}}",
+            icon: "success",
+            width: 400,
+            padding: '3em',
+            backdrop: `
+               rgba(0,0,123,0.4)
+            `
+          })
+        </script>
+      
+      {% endfor %}
+    {% endif %}
+</body>
+
+
+</html>
